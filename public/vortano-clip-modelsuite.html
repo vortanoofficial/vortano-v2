@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Vortano — AI Model Suite</title>
+<style>
+  :root{ --gold:#e7c87a; --gold2:#c9a24b; --ink:#f6f1e6; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; background:#000; overflow:hidden; font-family:Arial,Helvetica,sans-serif; }
+  #wrap{ position:absolute; left:50%; top:50%; width:1280px; height:720px; transform-origin:center; }
+  #stage{ position:relative; width:100%; height:100%; background:radial-gradient(120% 90% at 50% -10%, #17120b 0%, #0a0806 45%, #050403 100%); overflow:hidden; }
+  .bg-shine{ position:absolute; inset:-30%; pointer-events:none; background:linear-gradient(115deg, transparent 42%, rgba(231,200,122,.12) 49%, rgba(244,232,198,.18) 50%, rgba(201,162,75,.08) 54%, transparent 61%); background-size:250% 250%; filter:blur(10px); animation:shine 9s ease-in-out infinite; }
+  @keyframes shine{ 0%{background-position:0% 100%} 50%{background-position:100% 0%} 100%{background-position:0% 100%} }
+  .vignette{ position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 240px 60px rgba(0,0,0,.9); }
+  .scan{ position:absolute; inset:0; pointer-events:none; opacity:.10; background:repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0 1px, transparent 1px 3px); mix-blend-mode:overlay; }
+  .wm{ position:absolute; top:26px; left:30px; height:44px; z-index:20; filter:drop-shadow(0 4px 14px rgba(201,162,75,.5)); opacity:.95; }
+  .site{ position:absolute; bottom:24px; right:34px; z-index:20; font-family:'Courier New',monospace; font-size:20px; font-weight:700; color:var(--gold); letter-spacing:1px; text-shadow:0 0 12px rgba(201,162,75,.4); }
+  .frame{ position:absolute; inset:22px; border:1px solid rgba(201,162,75,.28); border-radius:22px; pointer-events:none; z-index:19; }
+  #glitch{ position:absolute; inset:0; z-index:30; pointer-events:none; opacity:0; }
+  #glitch.on{ animation:gl .5s steps(1) both; }
+  #glitch .r{ position:absolute; inset:0; background:rgba(255,40,40,.5); mix-blend-mode:screen; animation:glr .5s steps(1) both; }
+  #glitch .c{ position:absolute; inset:0; background:rgba(40,220,255,.45); mix-blend-mode:screen; animation:glc .5s steps(1) both; }
+  #glitch .b{ position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent 0 7px, rgba(0,0,0,.5) 7px 9px); mix-blend-mode:multiply; animation:glb .5s steps(1) both; }
+  @keyframes gl{ 0%{opacity:1} 100%{opacity:0} }
+  @keyframes glr{ 0%{opacity:.5;transform:translateX(-10px)} 20%{opacity:0} 40%{opacity:.4;transform:translateX(8px)} 60%,100%{opacity:0} }
+  @keyframes glc{ 0%{opacity:.45;transform:translateX(10px)} 20%{opacity:0} 40%{opacity:.35;transform:translateX(-8px)} 60%,100%{opacity:0} }
+  @keyframes glb{ 0%{opacity:.6;clip-path:inset(20% 0 60% 0)} 25%{opacity:0} 50%{opacity:.5;clip-path:inset(65% 0 12% 0)} 70%,100%{opacity:0} }
+  #scene{ position:absolute; inset:0; z-index:10; display:flex; flex-direction:column; justify-content:center; padding:0 96px; }
+  .in{ animation:fadeUp .7s cubic-bezier(.2,.6,.2,1) both; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:translateY(0)} }
+  .mono{ font-family:'Courier New',monospace; color:#9fe6b4; font-size:26px; line-height:2; text-shadow:0 0 10px rgba(120,220,150,.35); }
+  .eyebrow{ font-family:'Courier New',monospace; letter-spacing:6px; text-transform:uppercase; color:var(--gold); font-size:20px; font-weight:700; }
+  .h1{ font-size:88px; font-weight:800; color:var(--ink); line-height:1.03; letter-spacing:-1px; }
+  .h1 .g{ background:linear-gradient(100deg,#f7edcb,#e7c87a 45%,#c9a24b); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lock{ height:104px; margin-bottom:14px; filter:drop-shadow(0 8px 30px rgba(201,162,75,.5)); }
+  .pill{ display:inline-block; margin-left:16px; vertical-align:middle; background:linear-gradient(180deg,#f6ecca,#d8b45e); color:#211505; font-weight:800; font-size:24px; padding:5px 18px; border-radius:30px; }
+  .upd{ font-size:42px; font-weight:800; color:var(--ink); margin:12px 0; opacity:0; }
+  .upd .g{ color:var(--gold); }
+  .upd.show{ animation:fadeUp .6s ease both; }
+  .sub{ margin-top:20px; font-size:30px; color:#cdc4b2; font-weight:600; }
+  .cta{ margin-top:10px; display:inline-block; background:linear-gradient(180deg,#f0dca4,#c9a24b); color:#1a1206; font-weight:800; font-size:26px; padding:15px 32px; border-radius:16px; box-shadow:0 14px 40px -14px rgba(201,162,75,.8); }
+  #start{ position:absolute; inset:0; z-index:50; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; background:radial-gradient(circle at 50% 40%, rgba(20,16,10,.7), rgba(0,0,0,.92)); }
+  #start img{ height:120px; margin-bottom:6px; filter:drop-shadow(0 8px 30px rgba(201,162,75,.6)); }
+  .btn{ cursor:pointer; border:none; font-weight:800; border-radius:14px; padding:16px 30px; font-size:20px; }
+  .play{ background:linear-gradient(180deg,#f0dca4,#c9a24b); color:#1a1206; box-shadow:0 12px 34px -12px rgba(201,162,75,.8); }
+  .rec{ background:transparent; color:var(--gold); border:1px solid rgba(201,162,75,.5); font-size:15px; padding:10px 18px; }
+  .hint{ color:#8b8270; font-size:14px; max-width:520px; text-align:center; line-height:1.6; }
+  #recdot{ position:absolute; top:26px; right:34px; z-index:60; display:none; align-items:center; gap:8px; color:#ff5a5a; font-family:'Courier New',monospace; font-size:14px; }
+  #recdot i{ width:11px; height:11px; border-radius:50%; background:#ff3b3b; animation:blk 1s step-end infinite; }
+  @keyframes blk{ 50%{opacity:0} }
+</style></head>
+<body>
+<div id="wrap"><div id="stage">
+  <div class="bg-shine"></div><div class="scan"></div><div class="vignette"></div><div class="frame"></div>
+  <img class="wm" src="vortano-emblem.png" alt=""/>
+  <div class="site">vortano.ai</div>
+  <div id="glitch"><div class="r"></div><div class="c"></div><div class="b"></div></div>
+  <div id="scene"></div>
+  <div id="recdot"><i></i> REC</div>
+  <div id="start">
+    <img src="vortano-emblem.png" alt="Vortano"/>
+    <button class="btn play" id="play">&#9654;  Play with sound</button>
+    <button class="btn rec" id="record">&#9210;  Record to video file</button>
+    <div class="hint">Play to preview. To export: Record &rarr; choose &ldquo;This tab&rdquo; + share tab audio &rarr; downloads a video. (Or screen-record fullscreen / OBS / Win+Alt+R.)</div>
+  </div>
+</div></div>
+<script>
+function fit(){ var s=Math.min(innerWidth/1280, innerHeight/720); var w=document.getElementById('wrap'); w.style.transform='translate(-50%,-50%) scale('+s+')'; }
+addEventListener('resize',fit); fit();
+var scene=document.getElementById('scene'), glitch=document.getElementById('glitch');
+var AC, master, musicGain;
+function beep(f,t,dur,type,g){ var o=AC.createOscillator(),ga=AC.createGain(); o.type=type||'square'; o.frequency.value=f; ga.gain.value=0; o.connect(ga); ga.connect(master); ga.gain.setValueAtTime(0,t); ga.gain.linearRampToValueAtTime(g||0.15,t+0.01); ga.gain.exponentialRampToValueAtTime(0.0001,t+dur); o.start(t); o.stop(t+dur+0.02); }
+function bootSfx(){ var t=AC.currentTime; beep(760,t,0.09,'square',.12); beep(1040,t+0.12,0.09,'square',.12); beep(1360,t+0.26,0.14,'square',.14); }
+function riser(){ var t=AC.currentTime,o=AC.createOscillator(),ga=AC.createGain(); o.type='sawtooth'; o.frequency.setValueAtTime(180,t); o.frequency.exponentialRampToValueAtTime(900,t+1.6); ga.gain.setValueAtTime(0.0001,t); ga.gain.linearRampToValueAtTime(0.06,t+1.4); ga.gain.exponentialRampToValueAtTime(0.0001,t+1.8); var lp=AC.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1400; o.connect(lp); lp.connect(ga); ga.connect(master); o.start(t); o.stop(t+1.9); }
+function tick(){ if(!AC) return; beep(1250,AC.currentTime,0.03,'square',.04); }
+function startMusic(){ musicGain=AC.createGain(); musicGain.gain.value=0.0; musicGain.connect(master); var lp=AC.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=700; lp.connect(musicGain); [110,164.81,220,329.63].forEach(function(f,i){ var o=AC.createOscillator(); o.type=i%2?'sine':'triangle'; o.frequency.value=f; var g=AC.createGain(); g.gain.value=(i<2?0.5:0.18); o.connect(g); g.connect(lp); o.start(); }); var lfo=AC.createOscillator(),lg=AC.createGain(); lfo.frequency.value=0.12; lg.gain.value=0.02; lfo.connect(lg); lg.connect(musicGain.gain); lfo.start(); musicGain.gain.linearRampToValueAtTime(0.06, AC.currentTime+2); }
+var VOICE=null;
+function pickVoice(){ var vs=speechSynthesis.getVoices(); if(!vs.length) return null; var pref=['Aria','Natural','Google US English','Microsoft Guy','Jenny','Zira','David']; for(var i=0;i<pref.length;i++){ var p=pref[i]; var v=vs.find(function(x){return /en(-|_)?US|en-GB|English/i.test(x.lang)&&x.name.indexOf(p)>=0;}); if(v) return v; } return vs.find(function(x){return /^en(-|_)?US/i.test(x.lang);})||vs.find(function(x){return /^en/i.test(x.lang);})||vs[0]; }
+speechSynthesis.onvoiceschanged=function(){ VOICE=pickVoice(); };
+function say(text){ return new Promise(function(res){ var done=false; function finish(){ if(done) return; done=true; res(); } if(!('speechSynthesis' in window)||!text){ setTimeout(finish,1400); return; } var words=text.split(/\s+/).length; var est=words*400+900; var u=new SpeechSynthesisUtterance(text); if(!VOICE) VOICE=pickVoice(); if(VOICE) u.voice=VOICE; u.lang='en-US'; u.rate=0.98; u.pitch=1.0; u.volume=1.0; u.onend=finish; u.onerror=finish; try{ speechSynthesis.speak(u); }catch(e){ setTimeout(finish,est); return; } setTimeout(function(){ try{speechSynthesis.cancel();}catch(e){} finish(); }, est+4000); }); }
+function wait(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+function flashGlitch(){ glitch.classList.remove('on'); void glitch.offsetWidth; glitch.classList.add('on'); if(AC) beep(140,AC.currentTime,0.12,'sawtooth',.08); }
+function set(html){ scene.innerHTML='<div class="in">'+html+'</div>'; }
+function voiced(t,min){ return Promise.all([ say(t), wait(min) ]).then(function(){}); }
+
+var SCENES = [{"type":"boot","lines":["&gt; module: MODEL SUITE","&gt; loading models ........ OK","&gt; READY"]},{"type":"title","eyebrow":"AI Model Suite","h1a":"A full-stack","h1b":"AI model suite.","sub":"Text &middot; Image &middot; Agents &middot; AI-native OS","voice":"Text generation. Image synthesis. Autonomous agents. And an A.I. native operating system. A full stack suite, all running on decentralized compute."},{"type":"bullets","eyebrow":"Every output, verifiable","items":["High-throughput LLMs — <span class='g'>128k context</span>","State-of-the-art image synthesis","<span class='g'>Autonomous</span> on-chain agents","Cryptographically attributable output"],"voice":"High throughput language models. State of the art image synthesis. Autonomous agents that transact on chain. And every output is cryptographically attributable."},{"type":"close","h1a":"Build on","h1b":"decentralized AI.","sub":"Every model. Every output. On-chain.","cta":"vortano.ai","voice":"Build on decentralized A.I. Every model, every output, on chain. This is Vortano."}];
+
+async function run(){
+  for(var idx=0; idx<SCENES.length; idx++){
+    var s=SCENES[idx];
+    flashGlitch();
+    if(s.type==='boot'){
+      set('<div class="mono" id="boot"></div>'); bootSfx();
+      var boot=document.getElementById('boot');
+      for(var j=0;j<s.lines.length;j++){ boot.insertAdjacentHTML('beforeend', s.lines[j]+'<br>'); tick(); await wait(600); }
+      await wait(500);
+    } else if(s.type==='title'){
+      var h='';
+      if(s.lock){ h+='<img class="lock" src="vortano-lockup.png"/>'+(s.pill?'<span class="pill">V2</span>':'')+'<div style="height:8px"></div>'; }
+      if(s.eyebrow){ h+='<div class="eyebrow">'+s.eyebrow+'</div>'; }
+      h+='<div class="h1" style="margin-top:20px">'+s.h1a+'<br><span class="g">'+s.h1b+'</span></div>';
+      if(s.sub){ h+='<div class="sub">'+s.sub+'</div>'; }
+      set(h);
+      await voiced(s.voice, s.min||4600);
+    } else if(s.type==='bullets'){
+      var hb='<div class="eyebrow">'+s.eyebrow+'</div><div style="margin-top:22px">';
+      for(var k=0;k<s.items.length;k++){ hb+='<div class="upd" id="b'+k+'">&#9670; '+s.items[k]+'</div>'; }
+      hb+='</div>'; set(hb);
+      var vp=say(s.voice);
+      for(var m=0;m<s.items.length;m++){ document.getElementById('b'+m).classList.add('show'); if(AC) beep(880+m*110,AC.currentTime,0.06,'sine',.06); await wait(1050); }
+      await Promise.all([vp, wait(500)]);
+    } else if(s.type==='close'){
+      var hc='<div class="h1">'+s.h1a+' <span class="g">'+s.h1b+'</span></div>';
+      if(s.sub){ hc+='<div class="sub">'+s.sub+'</div>'; }
+      if(s.cta){ hc+='<div style="margin-top:16px"><span class="cta">'+s.cta+'</span></div>'; }
+      set(hc); if(AC) riser();
+      await voiced(s.voice, s.min||5200);
+    }
+    await wait(220);
+  }
+  if(musicGain) musicGain.gain.linearRampToValueAtTime(0.0001, AC.currentTime+1.5);
+}
+var started=false;
+async function begin(){ if(started) return; started=true; document.getElementById('start').style.display='none'; AC=new (window.AudioContext||window.webkitAudioContext)(); master=AC.createGain(); master.gain.value=0.9; master.connect(AC.destination); startMusic(); try{ VOICE=pickVoice(); }catch(e){} await run(); }
+document.getElementById('play').addEventListener('click', begin);
+document.getElementById('record').addEventListener('click', async function(){ try{ var stream=await navigator.mediaDevices.getDisplayMedia({ video:{frameRate:30}, audio:true }); var rec=new MediaRecorder(stream, { mimeType:'video/webm;codecs=vp9,opus' }); var chunks=[]; rec.ondataavailable=function(e){ if(e.data.size) chunks.push(e.data); }; rec.onstop=function(){ var blob=new Blob(chunks,{type:'video/webm'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vortano-clip-modelsuite.webm'; a.click(); document.getElementById('recdot').style.display='none'; }; document.getElementById('recdot').style.display='flex'; rec.start(); await begin(); setTimeout(function(){ rec.stop(); stream.getTracks().forEach(function(t){t.stop();}); }, 2500); }catch(err){ alert('Recording cancelled or not permitted. You can also screen-record with OBS or Win+Alt+R.'); document.getElementById('start').style.display='flex'; } });
+</script>
+</body></html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Vortano V2 — Announcement</title>
+<style>
+  :root{ --gold:#e7c87a; --gold2:#c9a24b; --ink:#f6f1e6; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; background:#000; overflow:hidden; font-family:Arial,Helvetica,sans-serif; }
+  #wrap{ position:absolute; left:50%; top:50%; width:1280px; height:720px; transform-origin:center; }
+  #stage{ position:relative; width:100%; height:100%; background:radial-gradient(120% 90% at 50% -10%, #17120b 0%, #0a0806 45%, #050403 100%); overflow:hidden; }
+
+  .bg-shine{ position:absolute; inset:-30%; pointer-events:none;
+    background:linear-gradient(115deg, transparent 42%, rgba(231,200,122,.12) 49%, rgba(244,232,198,.18) 50%, rgba(201,162,75,.08) 54%, transparent 61%);
+    background-size:250% 250%; filter:blur(10px); animation:shine 9s ease-in-out infinite; }
+  @keyframes shine{ 0%{background-position:0% 100%} 50%{background-position:100% 0%} 100%{background-position:0% 100%} }
+  .vignette{ position:absolute; inset:0; pointer-events:none; box-shadow:inset 0 0 240px 60px rgba(0,0,0,.9); }
+  .scan{ position:absolute; inset:0; pointer-events:none; opacity:.10; background:repeating-linear-gradient(0deg, rgba(255,255,255,.5) 0 1px, transparent 1px 3px); mix-blend-mode:overlay; }
+
+  /* persistent brand */
+  .wm{ position:absolute; top:26px; left:30px; height:44px; z-index:20; filter:drop-shadow(0 4px 14px rgba(201,162,75,.5)); opacity:.95; }
+  .site{ position:absolute; bottom:24px; right:34px; z-index:20; font-family:'Courier New',monospace; font-size:20px; font-weight:700; color:var(--gold); letter-spacing:1px; text-shadow:0 0 12px rgba(201,162,75,.4); }
+  .frame{ position:absolute; inset:22px; border:1px solid rgba(201,162,75,.28); border-radius:22px; pointer-events:none; z-index:19; }
+
+  /* glitch overlay */
+  #glitch{ position:absolute; inset:0; z-index:30; pointer-events:none; opacity:0; }
+  #glitch.on{ animation:gl .5s steps(1) both; }
+  #glitch .r{ position:absolute; inset:0; background:rgba(255,40,40,.5); mix-blend-mode:screen; animation:glr .5s steps(1) both; }
+  #glitch .c{ position:absolute; inset:0; background:rgba(40,220,255,.45); mix-blend-mode:screen; animation:glc .5s steps(1) both; }
+  #glitch .b{ position:absolute; inset:0; background:repeating-linear-gradient(0deg, transparent 0 7px, rgba(0,0,0,.5) 7px 9px); mix-blend-mode:multiply; animation:glb .5s steps(1) both; }
+  @keyframes gl{ 0%{opacity:1} 100%{opacity:0} }
+  @keyframes glr{ 0%{opacity:.5;transform:translateX(-10px)} 20%{opacity:0} 40%{opacity:.4;transform:translateX(8px)} 60%,100%{opacity:0} }
+  @keyframes glc{ 0%{opacity:.45;transform:translateX(10px)} 20%{opacity:0} 40%{opacity:.35;transform:translateX(-8px)} 60%,100%{opacity:0} }
+  @keyframes glb{ 0%{opacity:.6;clip-path:inset(20% 0 60% 0)} 25%{opacity:0} 50%{opacity:.5;clip-path:inset(65% 0 12% 0)} 70%,100%{opacity:0} }
+
+  /* scene */
+  #scene{ position:absolute; inset:0; z-index:10; display:flex; flex-direction:column; justify-content:center; padding:0 96px; }
+  .in{ animation:fadeUp .7s cubic-bezier(.2,.6,.2,1) both; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:translateY(0)} }
+
+  .mono{ font-family:'Courier New',monospace; color:#9fe6b4; font-size:26px; line-height:2; text-shadow:0 0 10px rgba(120,220,150,.35); }
+  .eyebrow{ font-family:'Courier New',monospace; letter-spacing:6px; text-transform:uppercase; color:var(--gold); font-size:20px; font-weight:700; }
+  .h1{ font-size:96px; font-weight:800; color:var(--ink); line-height:1.02; letter-spacing:-1px; }
+  .h1 .g{ background:linear-gradient(100deg,#f7edcb,#e7c87a 45%,#c9a24b); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lock{ height:120px; margin-bottom:26px; filter:drop-shadow(0 8px 30px rgba(201,162,75,.5)); }
+  .pill{ display:inline-block; margin-left:16px; vertical-align:middle; background:linear-gradient(180deg,#f6ecca,#d8b45e); color:#211505; font-weight:800; font-size:26px; padding:6px 20px; border-radius:30px; }
+  .upd{ font-size:46px; font-weight:800; color:var(--ink); margin:14px 0; opacity:0; }
+  .upd .g{ color:var(--gold); }
+  .upd.show{ animation:fadeUp .6s ease both; }
+  .sub{ margin-top:20px; font-size:30px; color:#cdc4b2; font-weight:600; }
+
+  /* wallet mock */
+  .wcard{ width:560px; border-radius:26px; padding:26px; background:linear-gradient(180deg,#1d1811,#120f0a); border:1px solid rgba(201,162,75,.3); box-shadow:0 30px 90px -40px #000; }
+  .wtop{ display:flex; align-items:center; gap:12px; }
+  .wtop img{ height:30px; } .wtop b{ color:var(--ink); font-size:22px; }
+  .wtop .net{ margin-left:auto; font-size:14px; color:#9fe6b4; border:1px solid rgba(201,162,75,.3); border-radius:20px; padding:5px 12px; }
+  .prompt{ margin-top:22px; background:rgba(0,0,0,.5); border:1px solid rgba(201,162,75,.28); border-radius:16px; padding:18px 20px; font-size:22px; color:var(--ink); min-height:96px; }
+  .prompt .k{ color:var(--gold); font-weight:800; } .caret{ display:inline-block; width:3px; height:24px; background:var(--gold); margin-left:2px; vertical-align:-4px; animation:bl 1s step-end infinite; }
+  @keyframes bl{ 50%{opacity:0} }
+  .exec{ margin-top:18px; display:flex; align-items:center; gap:14px; font-size:20px; color:#cdc4b2; opacity:0; }
+  .exec.show{ animation:fadeUp .5s ease both; }
+  .bar{ flex:1; height:10px; border-radius:8px; background:rgba(201,162,75,.15); overflow:hidden; }
+  .bar > i{ display:block; height:100%; width:0; background:linear-gradient(90deg,#e7c87a,#c9a24b); }
+  .ok{ color:#8fd6a6; font-weight:800; }
+  .wcap{ margin-top:22px; font-size:34px; font-weight:800; color:var(--ink); }
+  .wcap .g{ color:var(--gold); }
+
+  .cta{ margin-top:26px; display:inline-block; background:linear-gradient(180deg,#f0dca4,#c9a24b); color:#1a1206; font-weight:800; font-size:26px; padding:16px 34px; border-radius:16px; box-shadow:0 14px 40px -14px rgba(201,162,75,.8); }
+
+  /* start / controls */
+  #start{ position:absolute; inset:0; z-index:50; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; background:radial-gradient(circle at 50% 40%, rgba(20,16,10,.7), rgba(0,0,0,.92)); }
+  #start img{ height:120px; margin-bottom:6px; filter:drop-shadow(0 8px 30px rgba(201,162,75,.6)); }
+  .btn{ cursor:pointer; border:none; font-weight:800; border-radius:14px; padding:16px 30px; font-size:20px; }
+  .play{ background:linear-gradient(180deg,#f0dca4,#c9a24b); color:#1a1206; box-shadow:0 12px 34px -12px rgba(201,162,75,.8); }
+  .rec{ background:transparent; color:var(--gold); border:1px solid rgba(201,162,75,.5); font-size:15px; padding:10px 18px; }
+  .hint{ color:#8b8270; font-size:14px; max-width:520px; text-align:center; line-height:1.6; }
+  #recdot{ position:absolute; top:26px; right:34px; z-index:60; display:none; align-items:center; gap:8px; color:#ff5a5a; font-family:'Courier New',monospace; font-size:14px; }
+  #recdot i{ width:11px; height:11px; border-radius:50%; background:#ff3b3b; animation:bl 1s step-end infinite; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="stage">
+    <div class="bg-shine"></div>
+    <div class="scan"></div>
+    <div class="vignette"></div>
+    <div class="frame"></div>
+    <img class="wm" src="vortano-emblem.png" alt=""/>
+    <div class="site">vortano.ai</div>
+    <div id="glitch"><div class="r"></div><div class="c"></div><div class="b"></div></div>
+    <div id="scene"></div>
+    <div id="recdot"><i></i> REC</div>
+
+    <div id="start">
+      <img src="vortano-emblem.png" alt="Vortano"/>
+      <button class="btn play" id="play">▶  Play with sound</button>
+      <button class="btn rec" id="record">⏺  Record to video file</button>
+      <div class="hint">Play once to preview. To export for X: click Record → choose “This tab” and enable “share tab audio”, then it plays and downloads a video. (Or screen-record fullscreen with OBS / Win+Alt+R.)</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- responsive scale ---------- */
+function fit(){ const s=Math.min(innerWidth/1280, innerHeight/720); const w=document.getElementById('wrap'); w.style.transform='translate(-50%,-50%) scale('+s+')'; }
+addEventListener('resize',fit); fit();
+
+const scene=document.getElementById('scene'), glitch=document.getElementById('glitch');
+let AC, master, musicGain;
+
+/* ---------- audio (synth, original — no copyright) ---------- */
+function beep(f,t,dur,type,g){ const o=AC.createOscillator(),ga=AC.createGain(); o.type=type||'square'; o.frequency.value=f; ga.gain.value=0; o.connect(ga); ga.connect(master);
+  ga.gain.setValueAtTime(0,t); ga.gain.linearRampToValueAtTime(g||0.15,t+0.01); ga.gain.exponentialRampToValueAtTime(0.0001,t+dur); o.start(t); o.stop(t+dur+0.02); }
+function bootSfx(){ const t=AC.currentTime; beep(760,t,0.09,'square',.12); beep(1040,t+0.12,0.09,'square',.12); beep(1360,t+0.26,0.14,'square',.14); }
+function riser(){ const t=AC.currentTime,o=AC.createOscillator(),ga=AC.createGain(); o.type='sawtooth'; o.frequency.setValueAtTime(180,t); o.frequency.exponentialRampToValueAtTime(900,t+1.6);
+  ga.gain.setValueAtTime(0.0001,t); ga.gain.linearRampToValueAtTime(0.06,t+1.4); ga.gain.exponentialRampToValueAtTime(0.0001,t+1.8); const lp=AC.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1400; o.connect(lp); lp.connect(ga); ga.connect(master); o.start(t); o.stop(t+1.9); }
+function tick(){ if(!AC) return; beep(1250,AC.currentTime,0.03,'square',.04); }
+function startMusic(){ // subtle ambient pad, low volume
+  musicGain=AC.createGain(); musicGain.gain.value=0.0; musicGain.connect(master);
+  const lp=AC.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=700; lp.connect(musicGain);
+  [110,164.81,220,329.63].forEach((f,i)=>{ const o=AC.createOscillator(); o.type=i%2?'sine':'triangle'; o.frequency.value=f; const g=AC.createGain(); g.gain.value=(i<2?0.5:0.18); o.connect(g); g.connect(lp); o.start(); });
+  // slow tremolo
+  const lfo=AC.createOscillator(),lg=AC.createGain(); lfo.frequency.value=0.12; lg.gain.value=0.02; lfo.connect(lg); lg.connect(musicGain.gain); lfo.start();
+  musicGain.gain.linearRampToValueAtTime(0.06, AC.currentTime+2); // fade in, stays quiet
+}
+
+/* ---------- voice ---------- */
+let VOICE=null;
+function pickVoice(){ const vs=speechSynthesis.getVoices(); if(!vs.length) return null;
+  const pref=['Aria','Natural','Google US English','Microsoft Guy','Jenny','Zira','David'];
+  for(const p of pref){ const v=vs.find(x=>/en(-|_)?US|en-GB|English/i.test(x.lang)&&x.name.includes(p)); if(v) return v; }
+  return vs.find(x=>/^en(-|_)?US/i.test(x.lang))||vs.find(x=>/^en/i.test(x.lang))||vs[0]; }
+speechSynthesis.onvoiceschanged=()=>{ VOICE=pickVoice(); };
+function say(text){ return new Promise(res=>{
+  let done=false; const finish=()=>{ if(done) return; done=true; res(); };
+  if(!('speechSynthesis' in window)||!text){ setTimeout(finish,1400); return; }
+  const words=text.split(/\s+/).length; const est=words*400+900;
+  const u=new SpeechSynthesisUtterance(text); if(!VOICE) VOICE=pickVoice(); if(VOICE) u.voice=VOICE; u.lang='en-US'; u.rate=0.98; u.pitch=1.0; u.volume=1.0;
+  u.onend=finish; u.onerror=finish;
+  try{ speechSynthesis.speak(u); }catch(e){ setTimeout(finish, est); return; }
+  // hard safety cap so a scene never hangs if speech silently fails
+  setTimeout(()=>{ try{speechSynthesis.cancel();}catch(e){} finish(); }, est+4000); }); }
+
+/* ---------- helpers ---------- */
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function flashGlitch(){ glitch.classList.remove('on'); void glitch.offsetWidth; glitch.classList.add('on'); if(AC) beep(140,AC.currentTime,0.12,'sawtooth',.08); }
+function set(html){ scene.innerHTML='<div class="in">'+html+'</div>'; }
+
+async function typewriter(el, full){ el.innerHTML=''; const caret=document.createElement('span'); caret.className='caret';
+  for(let i=0;i<full.length;i++){ const ch=full[i];
+    // highlight the swap phrase
+    el.insertAdjacentHTML('beforeend', ch==='\n'?'<br>':ch.replace('&','&amp;')); el.appendChild(caret);
+    if(ch!==' ') tick(); await wait(38+Math.random()*30); }
+  el.appendChild(caret); }
+
+/* ---------- scenes ---------- */
+async function run(){
+  // 0 — boot
+  flashGlitch();
+  set('<div class="mono" id="boot"></div>');
+  bootSfx();
+  const boot=document.getElementById('boot');
+  const lines=['> VORTANO OS  ·  booting…','> loading protocol modules ........ OK','> SYSTEM ONLINE'];
+  for(const l of lines){ boot.insertAdjacentHTML('beforeend', l+'<br>'); tick(); await wait(620); }
+  await wait(500);
+
+  // 1 — title
+  flashGlitch();
+  set('<img class="lock" src="vortano-lockup.png" alt="Vortano"/><span class="pill">V2</span>'+
+      '<div class="h1" style="margin-top:26px">Everything just<br><span class="g">changed.</span></div>');
+  await Promise.all([ say('Vortano. The on-chain intelligence economy. Version two is here. And everything just changed.'), wait(5000) ]);
+  await wait(250);
+
+  // 2 — updates
+  flashGlitch();
+  set('<div class="eyebrow">The biggest upgrade in our history</div>'+
+      '<div style="margin-top:26px">'+
+      '<div class="upd" id="u0">◆ Brand-new <span class="g">logo &amp; identity</span></div>'+
+      '<div class="upd" id="u1">◆ New home — vortano.org <span class="g">→ vortano.ai</span></div>'+
+      '<div class="upd" id="u2">◆ <span class="g">USDG</span> — native stablecoin, aligned with Robinhood</div>'+
+      '</div>');
+  const say2=say('A brand new identity. A new home — vortano dot A.I. And USDG, our native stablecoin, aligned with Robinhood.');
+  for(let i=0;i<3;i++){ const e=document.getElementById('u'+i); e.classList.add('show'); if(AC) beep(900+i*120,AC.currentTime,0.06,'sine',.06); await wait(1150); }
+  await Promise.all([ say2, wait(600) ]); await wait(200);
+
+  // 3 — wallet demo (typing prompt + swap)
+  flashGlitch();
+  set('<div class="eyebrow" style="margin-bottom:22px">The AI Wallet</div>'+
+      '<div class="wcard">'+
+        '<div class="wtop"><img src="vortano-emblem.png"/><b>Vortano Wallet</b><span class="net">● Robinhood Chain</span></div>'+
+        '<div class="prompt"><span id="pp"></span></div>'+
+        '<div class="exec" id="ex"><span>Executing swap</span><span class="bar"><i id="pbar"></i></span><span id="okx"></span></div>'+
+      '</div>'+
+      '<div class="wcap" id="wcap" style="opacity:0">A wallet you can <span class="g">talk to.</span></div>');
+  const sayW=say('And the wallet you can talk to. Just say it — and Vortano schedules, and executes it, on-chain.');
+  await typewriter(document.getElementById('pp'), 'swap $500 USDG → VRTN every day at 20:00, max 1% slippage');
+  const ex=document.getElementById('ex'); ex.classList.add('show'); if(AC) riser();
+  const pbar=document.getElementById('pbar'); pbar.style.transition='width 1.6s ease'; await wait(60); pbar.style.width='100%';
+  await wait(1650); document.getElementById('okx').innerHTML='<span class="ok">✓ Scheduled</span>'; if(AC) beep(1400,AC.currentTime,0.14,'sine',.12);
+  const wc=document.getElementById('wcap'); wc.style.animation='fadeUp .6s ease both'; wc.style.opacity='1';
+  await sayW; await wait(300);
+
+  // 4 — close
+  flashGlitch();
+  set('<div class="h1">Vortano <span class="g">V2</span> is live.</div>'+
+      '<div class="sub">Decentralized compute · autonomous agents · live on-chain</div>'+
+      '<div style="margin-top:8px"><span class="cta">Connect your wallet → vortano.ai</span></div>');
+  if(AC) riser();
+  await Promise.all([ say('Decentralized compute. Autonomous agents. All verifiable on-chain. This is Vortano version two. Connect your wallet at vortano dot A.I.'), wait(6000) ]);
+  await wait(1200);
+  // gentle music fade out
+  if(musicGain) musicGain.gain.linearRampToValueAtTime(0.0001, AC.currentTime+1.5);
+}
+
+/* ---------- boot audio + start ---------- */
+let started=false;
+async function begin(){
+  if(started) return; started=true;
+  document.getElementById('start').style.display='none';
+  AC=new (window.AudioContext||window.webkitAudioContext)(); master=AC.createGain(); master.gain.value=0.9; master.connect(AC.destination);
+  startMusic();
+  try{ VOICE=pickVoice(); }catch(e){}
+  await run();
+}
+document.getElementById('play').addEventListener('click', begin);
+
+/* ---------- optional in-browser recorder (tab capture) ---------- */
+document.getElementById('record').addEventListener('click', async ()=>{
+  try{
+    const stream=await navigator.mediaDevices.getDisplayMedia({ video:{frameRate:30}, audio:true });
+    const rec=new MediaRecorder(stream, { mimeType:'video/webm;codecs=vp9,opus' });
+    const chunks=[]; rec.ondataavailable=e=>chunks.length!==undefined&&e.data.size&&chunks.push(e.data);
+    rec.onstop=()=>{ const blob=new Blob(chunks,{type:'video/webm'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='vortano-v2-announcement.webm'; a.click(); document.getElementById('recdot').style.display='none'; };
+    document.getElementById('recdot').style.display='flex';
+    rec.start();
+    await begin();
+    // stop shortly after the sequence ends
+    setTimeout(()=>{ rec.stop(); stream.getTracks().forEach(t=>t.stop()); }, 2500);
+  }catch(err){ alert('Recording cancelled or not permitted. You can also screen-record with OBS or Win+Alt+R.'); document.getElementById('start').style.display='flex'; }
+});
+</script>
+</body>
+</html>

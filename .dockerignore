@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.gitignore
+npm-debug.log*
+.env*
+Dockerfile
+.dockerignore
+DEPLOY.md
+VORTANO V2 POST
+_assets_incoming
+.claude

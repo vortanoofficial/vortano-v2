@@ -1,0 +1,26 @@
+/node_modules
+/.next
+/out
+/build
+.DS_Store
+*.pem
+npm-debug.log*
+.env*
+!.env.example
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# Internal marketing collateral & tooling — not for the public repo
+/VORTANO V2 POST
+/scripts
+/X-ANNOUNCEMENT.md
+/_assets_incoming
+
+# Infra / ops specifics (shared host, tunnel, process configs) — kept private
+/DEPLOY.md
+/docker-compose.yml
+/deploy
+/ecosystem.config.cjs
+
+# Local tooling
+/.claude

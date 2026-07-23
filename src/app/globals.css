@@ -1,0 +1,512 @@
+@import "tailwindcss";
+
+/* ============================================================
+   VORTANO — Design System · Machined gold + chrome (Robinhood Chain)
+   Material vernacular: precision-milled bullion / instrument metal.
+   ============================================================ */
+
+@theme {
+  /* Surfaces — warm near-black */
+  --color-bg: #070605;
+  --color-bg-soft: #0d0b08;
+  --color-panel: #16130d;
+  --color-panel-2: #100d09;
+
+  /* Text — warm white / champagne greys */
+  --color-ink: #f6f1e6;
+  --color-muted: #b8ad98;
+  --color-dim: #7d7565;
+
+  /* Brand — gold + chrome */
+  --color-accent: #c9a24b;
+  --color-accent-light: #e7c87a;
+  --color-accent-pale: #f4e8c6;
+  --color-chrome: #d9dde3;
+  --color-positive: #8fd6a6;
+  --color-negative: #e6a15c;
+
+  /* Fonts (wired to next/font variables in layout.tsx) */
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display: var(--font-archivo), var(--font-geist-sans), system-ui, sans-serif;
+  --font-robo: var(--font-robotic), var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Motion */
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-blink: blink 1.1s step-end infinite;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+  --animate-shimmer: shimmer 6s linear infinite;
+}
+
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---- TANO walk-in intro ---- */
+@keyframes tanoWalk {
+  0%   { transform: translate(0px, 0px); }
+  40%  { transform: translate(var(--tano-tx, 0px), var(--tano-ty, 0px)); }
+  58%  { transform: translate(var(--tano-tx, 0px), var(--tano-ty, 0px)); }
+  100% { transform: translate(0px, 0px); }
+}
+.tano-walk { animation: tanoWalk 7.5s cubic-bezier(0.35, 0.12, 0.35, 1) 0.5s 1 both; }
+@keyframes tanoFace {
+  0%, 52%  { transform: scaleX(-1); }
+  60%, 100% { transform: scaleX(1); }
+}
+.tano-face { animation: tanoFace 7.5s linear 0.5s 1 both; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.35; transform: scale(0.85); } }
+@keyframes shimmer { to { background-position: 200% center; } }
+@keyframes sheen { 0% { transform: translateX(-130%) skewX(-18deg); } 60%, 100% { transform: translateX(230%) skewX(-18deg); } }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* ---- Ambient atmosphere ---------------------------------- */
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(201, 162, 75, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(201, 162, 75, 0.045) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(70% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+.glow-radial {
+  background:
+    radial-gradient(56% 46% at 50% -4%, rgba(231, 200, 122, 0.30) 0%, rgba(201, 162, 75, 0.08) 42%, transparent 72%),
+    radial-gradient(40% 30% at 82% 8%, rgba(201, 162, 75, 0.12) 0%, transparent 70%);
+}
+
+.glow-gold {
+  background: radial-gradient(50% 50% at 50% 50%, rgba(201, 162, 75, 0.32) 0%, rgba(201, 162, 75, 0.08) 45%, transparent 70%);
+}
+
+/* Running gold shine sweeping across the backdrop */
+.bg-shine {
+  position: fixed;
+  inset: -25%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 40%,
+    rgba(231, 200, 122, 0.11) 48%,
+    rgba(244, 232, 198, 0.16) 50%,
+    rgba(201, 162, 75, 0.08) 54%,
+    transparent 62%
+  );
+  background-size: 260% 260%;
+  filter: blur(14px);
+  animation: bg-shine 16s ease-in-out infinite;
+}
+@keyframes bg-shine {
+  0% { background-position: 0% 100%; }
+  50% { background-position: 100% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* Traveling light that chases around a rounded border (tech beam) */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.beam { position: relative; }
+.beam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2.5px;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 0deg,
+    transparent 18deg,
+    rgba(231, 200, 122, 0.9) 40deg,
+    #fff6da 50deg,
+    #ffffff 55deg,
+    rgba(231, 200, 122, 0.5) 66deg,
+    transparent 92deg,
+    transparent 198deg,
+    rgba(217, 221, 227, 0.85) 222deg,
+    #ffffff 232deg,
+    #f4faff 237deg,
+    rgba(217, 221, 227, 0.5) 248deg,
+    transparent 274deg,
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 5px rgba(231, 200, 122, 0.55));
+  animation: beam-spin 3s linear infinite;
+  pointer-events: none;
+}
+.beam--slow::after { animation-duration: 4.5s; }
+@keyframes beam-spin {
+  to { --beam-angle: 360deg; }
+}
+
+/* Running gold shine swept across a logo (masked to the artwork) */
+.logo-shine { position: relative; display: inline-block; line-height: 0; }
+.logo-shine__sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    rgba(255, 248, 224, 0.5) 48%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(231, 200, 122, 0.6) 53%,
+    transparent 60%
+  );
+  background-size: 230% 100%;
+  animation: logo-sweep 4.2s ease-in-out infinite;
+}
+@keyframes logo-sweep {
+  0% { background-position: 170% 0; }
+  55%, 100% { background-position: -70% 0; }
+}
+
+/* Film grain — applied as a fixed, non-interactive overlay */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Machined metal surfaces ----------------------------- */
+
+/* Panel with a real gold gradient bezel (not a flat 1px border) */
+.panel {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, rgba(24, 20, 14, 0.86), rgba(13, 11, 8, 0.86)) padding-box,
+    linear-gradient(150deg,
+      rgba(244, 232, 198, 0.55) 0%,
+      rgba(201, 162, 75, 0.30) 24%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(201, 162, 75, 0.22) 76%,
+      rgba(120, 88, 28, 0.45) 100%) border-box;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 60px -40px rgba(0, 0, 0, 0.9);
+}
+
+.panel-hover {
+  transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+}
+.panel-hover:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 26px 70px -34px rgba(201, 162, 75, 0.6);
+}
+
+/* ---- Buttons --------------------------------------------- */
+
+.btn-gold {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(180deg, #fbf1d1 0%, #e7c87a 24%, #c9a24b 56%, #a9772b 100%);
+  color: #241704;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -2px 7px rgba(120, 78, 20, 0.55),
+    0 12px 30px -14px rgba(201, 162, 75, 0.85);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-gold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  z-index: -1;
+}
+.btn-gold:hover::after { animation: sheen 0.9s ease; }
+
+.btn-ghost {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--color-bg-soft), var(--color-bg-soft)) padding-box,
+    linear-gradient(145deg, rgba(244, 232, 198, 0.6), rgba(201, 162, 75, 0.32) 52%, rgba(120, 88, 28, 0.45)) border-box;
+  color: var(--color-ink);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.btn-ghost:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px -16px rgba(201, 162, 75, 0.7);
+}
+
+/* ---- Type & structural devices --------------------------- */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Engraved serial-plate index (machined-hardware vernacular) */
+.index-plate {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #241704;
+  padding: 0.24rem 0.5rem;
+  border-radius: 0.4rem;
+  background: linear-gradient(180deg, #f6ecca 0%, #d8b45e 55%, #b98a34 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 2px rgba(120, 80, 20, 0.5), 0 2px 8px -3px rgba(201, 162, 75, 0.6);
+}
+
+.rule-gold {
+  background: linear-gradient(to right, rgba(201, 162, 75, 0.55), rgba(201, 162, 75, 0.06) 60%, transparent);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.03;
+  text-shadow: 0 0 46px rgba(201, 162, 75, 0.1);
+}
+.display em {
+  font-style: normal;
+  background: linear-gradient(100deg, #f4e8c6 0%, #e7c87a 26%, #b9862f 50%, #f0dca4 72%, #c9a24b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: var(--animate-shimmer);
+}
+
+.metal-gold {
+  background: linear-gradient(100deg, #f4e8c6 0%, #e7c87a 30%, #c9a24b 55%, #f0dca4 78%, #c9a24b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Bold, animated gold shine for labels */
+.shine-gold {
+  font-weight: 700;
+  background: linear-gradient(100deg, #fff6da 0%, #f4e8c6 16%, #e7c87a 32%, #b9862f 50%, #f6ecca 66%, #e7c87a 82%, #c9a24b 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: var(--animate-shimmer);
+}
+
+/* Luxury double-bezel frame (machined gold groove) */
+.lux {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(21, 17, 11, 0.92), rgba(10, 8, 6, 0.94)) padding-box,
+    linear-gradient(135deg,
+      #f6ecca 0%, #d8b45e 20%, #6b4f1e 40%,
+      #f0dca4 58%, #b9862f 80%, #e7c87a 100%) border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.45),
+    inset 0 0 22px rgba(201, 162, 75, 0.1),
+    0 24px 70px -34px rgba(201, 162, 75, 0.75);
+}
+.lux::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: inherit;
+  border: 1px solid rgba(201, 162, 75, 0.22);
+  pointer-events: none;
+}
+
+/* ---- Utilities ------------------------------------------- */
+
+.mask-x {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.hairline-t { border-top: 1px solid rgba(201, 162, 75, 0.14); }
+
+/* ---- Vortano Wallet mockup ------------------------------- */
+.wallet-card {
+  background: linear-gradient(180deg, #1d1811 0%, #141009 100%);
+  border: 1px solid rgba(201, 162, 75, 0.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 34px 90px -44px rgba(0, 0, 0, 0.95);
+}
+.wallet-balance {
+  background: linear-gradient(135deg, #f9f0d2 0%, #ecc978 46%, #d3a959 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 14px 34px -16px rgba(201, 162, 75, 0.8);
+}
+.wallet-chip {
+  background: rgba(36, 23, 4, 0.14);
+  color: #3a2a08;
+}
+.wallet-action {
+  background: rgba(201, 162, 75, 0.1);
+  border: 1px solid rgba(201, 162, 75, 0.24);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.wallet-action:hover {
+  background: rgba(201, 162, 75, 0.2);
+  transform: translateY(-2px);
+}
+.wallet-row {
+  transition: background 0.18s ease;
+}
+.wallet-row:hover {
+  background: rgba(201, 162, 75, 0.05);
+}
+
+/* ---- Live GPU-load bar graph ----------------------------- */
+.live-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 34px;
+}
+.live-bar {
+  flex: 1;
+  height: 100%;
+  border-radius: 2px 2px 0 0;
+  transform-origin: bottom;
+  background: linear-gradient(to top, rgba(201, 162, 75, 0.22), #e7c87a 88%, #fff6da);
+  box-shadow: 0 0 6px rgba(201, 162, 75, 0.25);
+  animation-name: bar-pulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes bar-pulse {
+  0%, 100% { transform: scaleY(var(--min, 0.3)); opacity: 0.5; }
+  50% { transform: scaleY(var(--max, 1)); opacity: 1; }
+}
+.live-bars--idle .live-bar {
+  animation: none;
+  transform: scaleY(0.22);
+  opacity: 0.35;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.16));
+  box-shadow: none;
+}
+
+/* ---- Glitch / signal-desync burst ------------------------ */
+.glitch { position: fixed; inset: 0; z-index: 45; pointer-events: none; overflow: hidden; }
+.glitch-tint { position: absolute; inset: 0; mix-blend-mode: screen; }
+.glitch-tint--r { background: rgba(255, 46, 46, 0.5); animation: g-tint-r 1.9s steps(1) both; }
+.glitch-tint--c { background: rgba(46, 224, 255, 0.42); animation: g-tint-c 1.9s steps(1) both; }
+.glitch-bars {
+  position: absolute; inset: 0; mix-blend-mode: multiply;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 6px, rgba(0,0,0,0.4) 6px 8px);
+  animation: g-bars 1.9s steps(1) both;
+}
+.glitch-scan {
+  position: absolute; inset: 0; opacity: 0.35;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 1px, transparent 1px 3px);
+  animation: g-flicker 1.9s steps(1) both;
+}
+.glitch-flash { position: absolute; inset: 0; opacity: 0; animation: g-flash 1.9s steps(1) both; }
+.glitch-text {
+  position: absolute; left: 5%; bottom: 9%;
+  font-family: var(--font-robo);
+  font-size: clamp(12px, 2.4vw, 20px);
+  letter-spacing: 0.16em;
+  color: #f4e8c6;
+  text-shadow: 2px 0 rgba(255,46,46,0.85), -2px 0 rgba(46,224,255,0.85);
+  animation: g-text 1.9s steps(1) both;
+}
+
+@keyframes g-tint-r {
+  0% { opacity: 0.5; transform: translateX(-9px); }
+  5% { opacity: 0; } 11% { opacity: 0.45; transform: translateX(7px); }
+  16% { opacity: 0; } 30% { opacity: 0.4; transform: translateX(-5px); }
+  34% { opacity: 0; } 60% { opacity: 0.3; transform: translateX(4px); }
+  64%, 100% { opacity: 0; }
+}
+@keyframes g-tint-c {
+  0% { opacity: 0.42; transform: translateX(9px); }
+  5% { opacity: 0; } 11% { opacity: 0.4; transform: translateX(-7px); }
+  16% { opacity: 0; } 30% { opacity: 0.34; transform: translateX(5px); }
+  34% { opacity: 0; } 60% { opacity: 0.26; transform: translateX(-4px); }
+  64%, 100% { opacity: 0; }
+}
+@keyframes g-bars {
+  0% { opacity: 0.6; clip-path: inset(0 0 0 0); }
+  8% { opacity: 0; } 20% { opacity: 0.55; clip-path: inset(18% 0 62% 0); transform: translateX(-6px); }
+  24% { opacity: 0; } 45% { opacity: 0.5; clip-path: inset(68% 0 12% 0); transform: translateX(8px); }
+  49% { opacity: 0; } 72% { opacity: 0.4; clip-path: inset(42% 0 40% 0); }
+  76%, 100% { opacity: 0; }
+}
+@keyframes g-flicker {
+  0%, 100% { opacity: 0.35; } 20% { opacity: 0.1; } 40% { opacity: 0.4; } 60% { opacity: 0.15; } 80% { opacity: 0.3; }
+}
+@keyframes g-flash {
+  0% { opacity: 0.14; background: #fff; }
+  2% { opacity: 0; } 48% { opacity: 0.1; background: #000; }
+  51% { opacity: 0; } 100% { opacity: 0; }
+}
+@keyframes g-text {
+  0% { opacity: 1; transform: translateX(0); }
+  10% { opacity: 0.2; transform: translateX(-9px); }
+  14% { opacity: 1; transform: translateX(6px); }
+  30% { opacity: 0.6; clip-path: inset(0 0 55% 0); }
+  34% { opacity: 1; clip-path: inset(0 0 0 0); }
+  70% { opacity: 0.9; } 88% { opacity: 0.3; } 100% { opacity: 0; }
+}
+
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: rgba(201, 162, 75, 0.28); border-radius: 999px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+
+*:focus-visible {
+  outline: 2px solid rgba(231, 200, 122, 0.7);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
