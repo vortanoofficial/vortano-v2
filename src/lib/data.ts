@@ -177,6 +177,6 @@ export const NAV = [
 
 export const FOOTER = {
   protocol: ["Marketplace", "Provider portal", "Slashing & bonds", "VRTN token"],
-  developers: ["Docs", "Whitepaper", "CLI · voltra-rent", "SDK (TS / Py)", "Contracts on Robinscan"],
+  developers: ["Ship log", "Whitepaper", "CLI · voltra-rent", "SDK (TS / Py)", "Contracts on Robinscan"],
   community: ["GitHub", "Discord", "X / Twitter", "Mirror", "DAO forum"],
 };

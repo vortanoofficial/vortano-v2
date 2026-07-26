@@ -94,6 +94,8 @@ const FOOTER_LINKS: Record<string, string> = {
   Platformpaper: "/platformpaper",
   Marketplace: "#marketplace",
   "VRTN token": "#wallet",
+  "Ship log": "/changelog",
+  GitHub: "https://github.com/vortanoofficial/vortano-v2",
 };
 
 function FooterCol({ title, items }: { title: string; items: string[] }) {

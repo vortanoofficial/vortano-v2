@@ -1,5 +1,6 @@
 import { SectionHeader } from "./SectionHeader";
 import { Reveal } from "./Reveal";
+import { SavingsCalculator } from "./SavingsCalculator";
 import { PRICE_TABLE } from "@/lib/data";
 
 export function Routing() {
@@ -51,6 +52,11 @@ export function Routing() {
         <p className="mt-5 font-mono text-xs text-dim">
           benchmark refreshed every 4h · on-demand list pricing · region-normalised to us-east
         </p>
+      </Reveal>
+
+      {/* Interactive savings estimator */}
+      <Reveal delay={0.1} className="mt-8 min-w-0 lg:max-w-2xl">
+        <SavingsCalculator />
       </Reveal>
     </section>
   );

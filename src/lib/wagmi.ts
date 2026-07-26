@@ -4,20 +4,19 @@ import { injected } from "wagmi/connectors";
 import { defineChain } from "viem";
 
 /**
- * Robinhood Chain config.
- * ⚠️ Replace `id` and the RPC URL with the real Robinhood Chain values once you
- * have them (from the Robinhood Chain docs / your VPS RPC). Everything else in the
- * app already reads from here, so this is the single place to update.
+ * Robinhood Chain — the real mainnet (L2 on Arbitrum Orbit, settles on Ethereum).
+ * Verified against the ethereum-lists registry: chainId 4663, official RPC and
+ * Blockscout explorer. Everything in the app reads from here.
  */
 export const robinhoodChain = defineChain({
-  id: 42161, // TODO: real Robinhood Chain id
+  id: 4663,
   name: "Robinhood Chain",
   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   rpcUrls: {
-    default: { http: ["https://arb1.arbitrum.io/rpc"] }, // TODO: real Robinhood Chain RPC
+    default: { http: ["https://rpc.mainnet.chain.robinhood.com"] },
   },
   blockExplorers: {
-    default: { name: "Robinscan", url: "https://robinscan.io" },
+    default: { name: "Robinhood Explorer", url: "https://robinhoodchain.blockscout.com" },
   },
 });
 

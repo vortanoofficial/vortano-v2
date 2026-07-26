@@ -4,6 +4,7 @@ import { Reveal } from "./Reveal";
 import { VrtnStats } from "./VrtnStats";
 import { StakingPreview } from "./StakingPreview";
 import { StakingDashboard } from "./StakingDashboard";
+import { AddToWallet } from "./AddToWallet";
 import { TOKEN_DIST } from "@/lib/data";
 
 export function Token() {
@@ -71,6 +72,11 @@ export function Token() {
             </div>
           </Reveal>
         </div>
+
+        {/* Add network + token to wallet — genuinely functional, all users */}
+        <Reveal className="mt-6 min-w-0">
+          <AddToWallet />
+        </Reveal>
 
         {/* Staking preview */}
         <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1fr]">
