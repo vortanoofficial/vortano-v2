@@ -1,6 +1,7 @@
 import { SectionHeader } from "./SectionHeader";
 import { Reveal } from "./Reveal";
 import { AgentBuilder } from "./AgentBuilder";
+import { VortanoPlayground } from "./VortanoPlayground";
 import { MODEL_SUITE } from "@/lib/data";
 
 export function ModelSuite() {
@@ -30,6 +31,11 @@ export function ModelSuite() {
           </Reveal>
         ))}
       </div>
+
+      {/* Try the model — a genuinely working preview */}
+      <Reveal delay={0.1} className="mt-6 min-w-0">
+        <VortanoPlayground />
+      </Reveal>
 
       {/* Build your own on-chain agent */}
       <Reveal delay={0.1} className="mt-6 min-w-0">
