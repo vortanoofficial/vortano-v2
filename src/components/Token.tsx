@@ -5,6 +5,7 @@ import { VrtnStats } from "./VrtnStats";
 import { StakingPreview } from "./StakingPreview";
 import { StakingDashboard } from "./StakingDashboard";
 import { AddToWallet } from "./AddToWallet";
+import { OnChainStats } from "./OnChainStats";
 import { TOKEN_DIST } from "@/lib/data";
 
 export function Token() {
@@ -72,6 +73,11 @@ export function Token() {
             </div>
           </Reveal>
         </div>
+
+        {/* Real, verifiable on-chain stats from Robinhood Chain */}
+        <Reveal className="mt-6 min-w-0">
+          <OnChainStats />
+        </Reveal>
 
         {/* Add network + token to wallet — genuinely functional, all users */}
         <Reveal className="mt-6 min-w-0">
