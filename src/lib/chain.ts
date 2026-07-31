@@ -61,6 +61,41 @@ export async function fetchOnChain(): Promise<OnChain> {
   }
 }
 
+export type Transfer = {
+  amount: number;
+  from: string;
+  to: string;
+  tx: string;
+  ts: string;
+};
+
+/** Recent real $VRTN transfers on Robinhood Chain (Blockscout). */
+export async function fetchTransfers(limit = 8): Promise<Transfer[]> {
+  try {
+    const j = await fetch(`${API}/tokens/${VRTN_CONTRACT}/transfers`, { cache: "no-store" }).then(
+      (r) => r.json(),
+    );
+    const items: unknown[] = Array.isArray(j?.items) ? j.items : [];
+    return items.slice(0, limit).map((raw) => {
+      const t = raw as Record<string, unknown>;
+      const total = (t.total ?? {}) as { value?: string; decimals?: string };
+      const dec = n(total.decimals) || 18;
+      const amount = total.value ? n(total.value) / 10 ** dec : 0;
+      const from = ((t.from ?? {}) as { hash?: string }).hash ?? "";
+      const to = ((t.to ?? {}) as { hash?: string }).hash ?? "";
+      return {
+        amount,
+        from,
+        to,
+        tx: (t.transaction_hash as string) ?? "",
+        ts: (t.timestamp as string) ?? "",
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
 export const fmtInt = (nn: number) => nn.toLocaleString("en-US");
 export const fmtCompact = (nn: number) =>
   new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(nn);

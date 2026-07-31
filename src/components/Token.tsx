@@ -6,6 +6,7 @@ import { StakingPreview } from "./StakingPreview";
 import { StakingDashboard } from "./StakingDashboard";
 import { AddToWallet } from "./AddToWallet";
 import { OnChainStats } from "./OnChainStats";
+import { LiveTransfers } from "./LiveTransfers";
 import { TOKEN_DIST } from "@/lib/data";
 
 export function Token() {
@@ -77,6 +78,11 @@ export function Token() {
         {/* Real, verifiable on-chain stats from Robinhood Chain */}
         <Reveal className="mt-6 min-w-0">
           <OnChainStats />
+        </Reveal>
+
+        {/* Live real $VRTN transfers from the explorer */}
+        <Reveal className="mt-6 min-w-0">
+          <LiveTransfers />
         </Reveal>
 
         {/* Add network + token to wallet — genuinely functional, all users */}
