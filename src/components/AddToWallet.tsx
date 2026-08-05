@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { VRTN_CONTRACT } from "@/lib/market";
+import { VRTN_CONTRACT, TOKEN_LIVE, FLAP_URL } from "@/lib/market";
 
 /**
  * One-tap: add the real Robinhood Chain network and the $VRTN token to any
@@ -108,10 +108,10 @@ export function AddToWallet() {
           </button>
           <button
             onClick={addToken}
-            disabled={tokenStatus === "pending"}
+            disabled={tokenStatus === "pending" || !TOKEN_LIVE}
             className="btn-gold rounded-xl px-4 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5 disabled:opacity-60"
           >
-            {label("Add $VRTN token", tokenStatus)}
+            {TOKEN_LIVE ? label("Add $VRTN token", tokenStatus) : "Token at flap.sh launch"}
           </button>
         </div>
       ) : (
@@ -124,17 +124,35 @@ export function AddToWallet() {
       {err && <p className="mt-3 text-[11px] leading-relaxed text-negative">{err}</p>}
 
       <div className="mt-5 flex items-center justify-between gap-3 rounded-xl border border-accent/15 bg-black/40 px-3.5 py-2.5">
-        <span className="min-w-0 flex-1 truncate font-mono text-xs tracking-wide text-accent-pale">
-          {VRTN_CONTRACT}
-        </span>
-        <a
-          href={`https://robinhoodchain.blockscout.com/token/${VRTN_CONTRACT}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-dim transition-colors hover:text-accent-pale"
-        >
-          Explorer ↗
-        </a>
+        {TOKEN_LIVE ? (
+          <>
+            <span className="min-w-0 flex-1 truncate font-mono text-xs tracking-wide text-accent-pale">
+              {VRTN_CONTRACT}
+            </span>
+            <a
+              href={`https://robinhoodchain.blockscout.com/token/${VRTN_CONTRACT}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-dim transition-colors hover:text-accent-pale"
+            >
+              Explorer ↗
+            </a>
+          </>
+        ) : (
+          <>
+            <span className="min-w-0 flex-1 truncate font-mono text-xs tracking-wide text-muted">
+              New $VRTN address published at the flap.sh relaunch
+            </span>
+            <a
+              href={FLAP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-dim transition-colors hover:text-accent-pale"
+            >
+              flap.sh ↗
+            </a>
+          </>
+        )}
       </div>
       <p className="mt-3 text-[11px] leading-relaxed text-dim">
         Chain ID 4663 · settles on Ethereum. Vortano never has custody of your funds — this only

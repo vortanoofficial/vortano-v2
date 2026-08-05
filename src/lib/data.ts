@@ -9,7 +9,7 @@ export const CHAIN = {
   explorer: "Robinscan",
   gas: "0.04 gwei",
   block: "18,492,113",
-  contract: "0xe81dc008231035c91f09633c541394b9ddf53673",
+  contract: "", // RELAUNCH: new flap.sh token address published at launch
 } as const;
 
 export const HERO_STATS = [

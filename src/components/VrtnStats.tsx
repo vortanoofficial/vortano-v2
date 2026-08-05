@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMarket } from "./MarketProvider";
-import { fmtPrice, fmtCompact, fmtPct, VRTN_PAIR, VRTN_CONTRACT, FLAP_URL } from "@/lib/market";
+import { fmtPrice, fmtCompact, fmtPct, VRTN_PAIR, VRTN_CONTRACT, FLAP_URL, TOKEN_LIVE } from "@/lib/market";
 
 export function VrtnStats() {
   const m = useMarket();
@@ -16,6 +16,30 @@ export function VrtnStats() {
     ["Market cap", fmtCompact(v.mcap)],
     ["Txns 24h", v.txns24h.toLocaleString("en-US")],
   ];
+
+  // RELAUNCH pending: hide old price/chart/contract until the new flap.sh token is set
+  if (!TOKEN_LIVE) {
+    return (
+      <div className="rounded-2xl border border-accent/20 bg-accent/[0.05] p-6 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/[0.06] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent-pale">
+          <span className="h-1.5 w-1.5 rounded-full bg-positive animate-pulse-dot" /> Relaunch pending
+        </div>
+        <div className="mt-4 text-lg font-semibold text-ink">$VRTN is relaunching on flap.sh</div>
+        <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted">
+          Price, chart and the new contract go live at launch. Every holder is airdropped the new
+          token 1:1 — no action needed. You never send tokens to claim.
+        </p>
+        <a
+          href={FLAP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-gold mt-5 inline-block rounded-xl px-5 py-2.5 text-sm font-semibold"
+        >
+          Follow on flap.sh ↗
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div>

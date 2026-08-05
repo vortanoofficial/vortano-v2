@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useMarket } from "./MarketProvider";
-import { fmtPct, VRTN_DEX_URL } from "@/lib/market";
+import { fmtPct, VRTN_DEX_URL, TOKEN_LIVE } from "@/lib/market";
 
 /**
  * Renders a sub-cent price the way crypto UIs do: "$0.0₄6287" — the subscript is
@@ -39,6 +39,26 @@ export function VrtnPill() {
       return () => clearTimeout(t);
     }
   }, [v.price]);
+
+  // RELAUNCH pending: no old price/contract — point to flap.sh
+  if (!TOKEN_LIVE) {
+    return (
+      <a
+        href={VRTN_DEX_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        title="$VRTN relaunching on flap.sh"
+        className="hidden items-center gap-2 rounded-lg border border-accent/15 bg-accent/[0.05] px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent/40 hover:text-ink lg:flex"
+      >
+        <span className="inline-flex items-center gap-1.5 font-semibold text-accent-pale">
+          <span className="h-1.5 w-1.5 rounded-full bg-positive animate-pulse-dot" />
+          $VRTN
+        </span>
+        <span className="h-3 w-px bg-accent/25" />
+        <span className="text-ink">flap.sh soon</span>
+      </a>
+    );
+  }
 
   return (
     <a

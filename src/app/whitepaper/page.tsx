@@ -100,7 +100,7 @@ export default function WhitepaperPage() {
             ["Status", "Bonded · live"],
           ]}
         />
-        <p className="font-mono text-xs text-dim">Contract · {CHAIN.contract}</p>
+        <p className="font-mono text-xs text-dim">Contract · new token published at the flap.sh relaunch</p>
         <p className="mt-2 font-mono text-xs">
           <a href="https://flap.sh" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Relaunching on flap.sh ↗</a>
         </p>

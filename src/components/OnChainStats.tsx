@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchOnChain, CHAIN_FALLBACK, fmtInt, fmtCompact, RH_EXPLORER, type OnChain } from "@/lib/chain";
-import { VRTN_CONTRACT } from "@/lib/market";
+import { VRTN_CONTRACT, TOKEN_LIVE, FLAP_URL } from "@/lib/market";
 
 /**
  * Live, verifiable on-chain stats for $VRTN pulled straight from the Robinhood
@@ -13,6 +13,7 @@ export function OnChainStats() {
   const [d, setD] = useState<OnChain>(CHAIN_FALLBACK);
 
   useEffect(() => {
+    if (!TOKEN_LIVE) return; // relaunch pending — don't fetch the old token
     let alive = true;
     const load = () => fetchOnChain().then((x) => alive && setD(x));
     load();
@@ -22,6 +23,24 @@ export function OnChainStats() {
       clearInterval(iv);
     };
   }, []);
+
+  if (!TOKEN_LIVE) {
+    return (
+      <div className="rounded-3xl border border-accent/20 bg-accent/[0.05] p-8 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/[0.06] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent-pale">
+          <span className="h-1.5 w-1.5 rounded-full bg-positive animate-pulse-dot" /> Relaunch pending
+        </div>
+        <div className="mt-4 text-lg font-semibold text-ink">Live on-chain stats go live at the flap.sh relaunch</div>
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
+          Holders, transfers and supply for the new token will stream here — verifiable on the
+          explorer — the moment it launches.
+        </p>
+        <a href={FLAP_URL} target="_blank" rel="noopener noreferrer" className="btn-gold mt-5 inline-block rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Follow on flap.sh ↗
+        </a>
+      </div>
+    );
+  }
 
   const stats: { k: string; v: string; sub: string; accent?: boolean }[] = [
     { k: "$VRTN holders", v: fmtInt(d.holders), sub: "on Robinhood Chain", accent: true },

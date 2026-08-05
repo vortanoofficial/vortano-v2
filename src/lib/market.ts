@@ -2,12 +2,15 @@
 // Live market data — Vortano (Dexscreener) + ETH/USDC (CoinGecko)
 // ============================================================
 
-// NOTE: after the flap.sh relaunch, update VRTN_CONTRACT + VRTN_PAIR to the NEW
-// token/pair — every on-chain widget (stats, transfers, add-to-wallet, chart) reads
-// from here, so it's the single place to change. FLAP_URL is the trade/launch link.
-export const VRTN_PAIR = "0x1a9b626ba0be56f0cfb3e55d4d0b71c942f0a461";
-export const VRTN_CONTRACT = "0xe81DC008231035C91F09633c541394B9DdF53673";
-export const FLAP_URL = "https://flap.sh"; // TODO: replace with the exact flap.sh token page after launch
+// RELAUNCH: the old (Virtuals-era) token is retired. Set VRTN_CONTRACT + VRTN_PAIR
+// to the NEW flap.sh token/pair at launch — every on-chain widget (stats, transfers,
+// add-to-wallet, chart, price) reads from here and reactivates automatically once
+// TOKEN_LIVE becomes true. Until then, the token UI shows a "launching on flap.sh"
+// state and NO old contract address is displayed anywhere.
+export const VRTN_PAIR = ""; // TODO: new flap.sh pair at launch
+export const VRTN_CONTRACT = ""; // TODO: new flap.sh token address at launch
+export const TOKEN_LIVE = /^0x[a-fA-F0-9]{40}$/.test(VRTN_CONTRACT);
+export const FLAP_URL = "https://flap.sh"; // TODO: exact flap.sh token page after launch
 export const VRTN_DEX_URL = FLAP_URL;
 
 export type Coin = { price: number; change24h: number };

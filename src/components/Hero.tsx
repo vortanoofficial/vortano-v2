@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ShineImage } from "./ShineImage";
 import { Reveal } from "./Reveal";
 import { RelaunchBanner } from "./RelaunchBanner";
+import { TOKEN_LIVE, FLAP_URL } from "@/lib/market";
 import { HERO_STATS, PRICE_TICKER, CHAIN } from "@/lib/data";
 
 function HeroLogo() {
@@ -60,7 +61,7 @@ function CopyCA() {
     <div className="lux beam rounded-3xl px-5 py-4">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <span className="shine-gold text-[11px] font-bold uppercase tracking-[0.18em] sm:text-xs">
-          Official Contract Address
+          {TOKEN_LIVE ? "Official Contract Address" : "Relaunching on flap.sh"}
         </span>
         <span className="inline-flex items-center gap-2">
           <Image
@@ -73,17 +74,33 @@ function CopyCA() {
           <span className="text-xs font-medium text-muted">On {CHAIN.name}</span>
         </span>
       </div>
-      <div className="mt-3 flex items-center gap-3 rounded-2xl border border-accent/15 bg-black/50 px-3.5 py-2.5">
-        <code className="min-w-0 flex-1 truncate font-robo text-[13px] tracking-[0.04em] text-accent-pale sm:text-[15px]">
-          {CHAIN.contract}
-        </code>
-        <button
-          onClick={copy}
-          className="btn-gold shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider"
-        >
-          {copied ? "Copied" : "Copy"}
-        </button>
-      </div>
+      {TOKEN_LIVE ? (
+        <div className="mt-3 flex items-center gap-3 rounded-2xl border border-accent/15 bg-black/50 px-3.5 py-2.5">
+          <code className="min-w-0 flex-1 truncate font-robo text-[13px] tracking-[0.04em] text-accent-pale sm:text-[15px]">
+            {CHAIN.contract}
+          </code>
+          <button
+            onClick={copy}
+            className="btn-gold shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider"
+          >
+            {copied ? "Copied" : "Copy"}
+          </button>
+        </div>
+      ) : (
+        <div className="mt-3 flex items-center gap-3 rounded-2xl border border-accent/15 bg-black/50 px-3.5 py-2.5">
+          <span className="min-w-0 flex-1 text-[13px] leading-snug text-muted sm:text-sm">
+            New $VRTN contract published at launch. Holders airdropped 1:1 — you never send tokens.
+          </span>
+          <a
+            href={FLAP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider"
+          >
+            flap.sh
+          </a>
+        </div>
+      )}
     </div>
   );
 }
