@@ -9,14 +9,14 @@ import { FLAP_URL } from "@/lib/market";
  * tokens to anyone. Dismissible (remembered in localStorage).
  */
 export function RelaunchBanner() {
-  const [show, setShow] = useState(false);
+  // Shown by default (renders on SSR so the relaunch notice appears instantly);
+  // hidden only once the visitor has dismissed it.
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     try {
-      setShow(localStorage.getItem("vortano-relaunch-dismissed") !== "1");
-    } catch {
-      setShow(true);
-    }
+      if (localStorage.getItem("vortano-relaunch-dismissed") === "1") setShow(false);
+    } catch {}
   }, []);
 
   if (!show) return null;
