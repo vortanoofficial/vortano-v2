@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ShineImage } from "./ShineImage";
 import { Reveal } from "./Reveal";
+import { RelaunchBanner } from "./RelaunchBanner";
 import { HERO_STATS, PRICE_TICKER, CHAIN } from "@/lib/data";
 
 function HeroLogo() {
@@ -121,6 +122,7 @@ export function Hero() {
       />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+        <RelaunchBanner />
         <Reveal>
           <div className="flex flex-wrap items-center gap-2.5">
             <div className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/[0.06] px-3.5 py-1.5 text-xs text-muted">
