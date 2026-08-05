@@ -45,7 +45,7 @@ export function VrtnPill() {
       href={VRTN_DEX_URL}
       target="_blank"
       rel="noopener noreferrer"
-      title={`$VRTN · ${m.live ? "live" : "cached"} price — open Dexscreener`}
+      title={`$VRTN · ${m.live ? "live" : "cached"} price — open flap.sh`}
       className="hidden items-center gap-2 rounded-lg border border-accent/15 bg-accent/[0.05] px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent/40 hover:text-ink lg:flex"
     >
       <span className="inline-flex items-center gap-1.5 font-semibold text-accent-pale">

@@ -2,9 +2,13 @@
 // Live market data — Vortano (Dexscreener) + ETH/USDC (CoinGecko)
 // ============================================================
 
+// NOTE: after the flap.sh relaunch, update VRTN_CONTRACT + VRTN_PAIR to the NEW
+// token/pair — every on-chain widget (stats, transfers, add-to-wallet, chart) reads
+// from here, so it's the single place to change. FLAP_URL is the trade/launch link.
 export const VRTN_PAIR = "0x1a9b626ba0be56f0cfb3e55d4d0b71c942f0a461";
 export const VRTN_CONTRACT = "0xe81DC008231035C91F09633c541394B9DdF53673";
-export const VRTN_DEX_URL = `https://dexscreener.com/robinhood/${VRTN_PAIR}`;
+export const FLAP_URL = "https://flap.sh"; // TODO: replace with the exact flap.sh token page after launch
+export const VRTN_DEX_URL = FLAP_URL;
 
 export type Coin = { price: number; change24h: number };
 export type Vrtn = Coin & {

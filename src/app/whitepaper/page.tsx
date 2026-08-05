@@ -27,11 +27,11 @@ export default function WhitepaperPage() {
           the Global Dollar native to the Robinhood ecosystem.
         </p>
         <Callout>
-          Vortano is live. <strong>$VRTN has bonded (graduated) on Virtuals Protocol</strong> and
-          now trades on the open market — verifiable in real time on Dexscreener and Robinscan.
+          Vortano is <strong>relaunching on flap.sh</strong>. Every existing $VRTN holder receives
+          the new token <strong>1:1 through a snapshot airdrop</strong> — you keep your tokens and
+          receive the new one automatically, no action required.
           <span className="mt-3 flex flex-wrap gap-3 font-mono text-xs">
-            <a href="https://app.virtuals.io/virtuals/97768" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Virtuals Protocol ↗</a>
-            <a href="https://dexscreener.com/robinhood/0x1a9b626ba0be56f0cfb3e55d4d0b71c942f0a461" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Dexscreener ↗</a>
+            <a href="https://flap.sh" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">flap.sh ↗</a>
           </span>
         </Callout>
       </Sec>
@@ -102,9 +102,7 @@ export default function WhitepaperPage() {
         />
         <p className="font-mono text-xs text-dim">Contract · {CHAIN.contract}</p>
         <p className="mt-2 font-mono text-xs">
-          <a href="https://app.virtuals.io/virtuals/97768" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Bonded on Virtuals Protocol ↗</a>
-          {" · "}
-          <a href="https://dexscreener.com/robinhood/0x1a9b626ba0be56f0cfb3e55d4d0b71c942f0a461" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Trade on Dexscreener ↗</a>
+          <a href="https://flap.sh" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Relaunching on flap.sh ↗</a>
         </p>
         <p className="mt-4">
           <strong>Distribution:</strong> Node providers 38% · Public sale 22% · DAO treasury 18% ·
@@ -149,7 +147,7 @@ export default function WhitepaperPage() {
       <Sec n="10" title="Roadmap">
         <Bullets
           items={[
-            <><strong>Shipped</strong> — mainnet on {CHAIN.name}, GPU marketplace, Spearbit audit, $VRTN bonded on Virtuals Protocol &amp; live on Dexscreener.</>,
+            <><strong>Shipped</strong> — mainnet on {CHAIN.name}, GPU marketplace, Spearbit audit, $VRTN relaunching on flap.sh with a 1:1 holder airdrop.</>,
             <><strong>In progress</strong> — hybrid NPU + GPU router, AI model suite, Vortano AI Wallet.</>,
             <><strong>Planned</strong> — autonomous on-chain agents, AI-native OS, zk-fraud proofs, DAO governance v1.</>,
           ]}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMarket } from "./MarketProvider";
-import { fmtPrice, fmtCompact, fmtPct, VRTN_PAIR, VRTN_CONTRACT } from "@/lib/market";
+import { fmtPrice, fmtCompact, fmtPct, VRTN_PAIR, VRTN_CONTRACT, FLAP_URL } from "@/lib/market";
 
 export function VrtnStats() {
   const m = useMarket();
@@ -23,7 +23,7 @@ export function VrtnStats() {
       <div className="flex items-end justify-between gap-3">
         <div>
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-dim">
-            VRTN / VIRTUAL
+            VRTN · flap.sh
             <span className="inline-flex items-center gap-1 text-positive">
               <span className="h-1 w-1 rounded-full bg-positive animate-pulse-dot" />
               {m.live ? "live" : "cached"}
@@ -96,12 +96,12 @@ export function VrtnStats() {
       <div className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-accent/15 bg-black/40 px-3.5 py-2.5">
         <span className="min-w-0 flex-1 truncate font-robo text-xs tracking-wide text-accent-pale">{VRTN_CONTRACT}</span>
         <a
-          href={`https://dexscreener.com/robinhood/${VRTN_PAIR}`}
+          href={FLAP_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-dim transition-colors hover:text-accent-pale"
         >
-          Dexscreener ↗
+          flap.sh ↗
         </a>
       </div>
     </div>

@@ -27,7 +27,7 @@ const KB: { match: RegExp; answer: string }[] = [
   {
     match: /\b(vrtn|token|tokenomic|supply|distribution)\b/i,
     answer:
-      "$VRTN is the coordination asset: it settles jobs, bonds every provider, governs protocol parameters, and shares protocol revenue with stakers. ERC-20, 18 decimals, 1.0B total supply, on Robinhood Chain. It's bonded on Virtuals Protocol and trading on Dexscreener.",
+      "$VRTN is the coordination asset: it settles jobs, bonds every provider, governs protocol parameters, and shares protocol revenue with stakers. ERC-20, 18 decimals, 1.0B total supply, on Robinhood Chain. Vortano is relaunching on flap.sh — every existing holder receives the new token 1:1 via a snapshot airdrop, no action required.",
   },
   {
     match: /\b(fee|commission|cut)\b/i,
