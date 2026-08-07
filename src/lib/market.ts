@@ -3,15 +3,15 @@
 // ============================================================
 
 // RELAUNCH: the old (Virtuals-era) token is retired. Set VRTN_CONTRACT + VRTN_PAIR
-// to the NEW flap.sh token/pair at launch — every on-chain widget (stats, transfers,
+// to the NEW pools.trade token/pair at launch — every on-chain widget (stats, transfers,
 // add-to-wallet, chart, price) reads from here and reactivates automatically once
-// TOKEN_LIVE becomes true. Until then, the token UI shows a "launching on flap.sh"
+// TOKEN_LIVE becomes true. Until then, the token UI shows a "launching on pools.trade"
 // state and NO old contract address is displayed anywhere.
-export const VRTN_PAIR = ""; // TODO: new flap.sh pair at launch
-export const VRTN_CONTRACT = ""; // TODO: new flap.sh token address at launch
+export const VRTN_PAIR = ""; // TODO: new pools.trade pair at launch
+export const VRTN_CONTRACT = ""; // TODO: new pools.trade token address at launch
 export const TOKEN_LIVE = /^0x[a-fA-F0-9]{40}$/.test(VRTN_CONTRACT);
-export const FLAP_URL = "https://flap.sh"; // TODO: exact flap.sh token page after launch
-export const VRTN_DEX_URL = FLAP_URL;
+export const LAUNCH_URL = "http://pools.trade"; // TODO: exact pools.trade token page after launch
+export const VRTN_DEX_URL = LAUNCH_URL;
 
 export type Coin = { price: number; change24h: number };
 export type Vrtn = Coin & {

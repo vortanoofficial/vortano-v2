@@ -27,11 +27,11 @@ export default function WhitepaperPage() {
           the Global Dollar native to the Robinhood ecosystem.
         </p>
         <Callout>
-          Vortano is <strong>relaunching on flap.sh</strong>. Every existing $VRTN holder receives
+          Vortano is <strong>relaunching on pools.trade</strong>. Every existing $VRTN holder receives
           the new token <strong>1:1 through a snapshot airdrop</strong> — you keep your tokens and
           receive the new one automatically, no action required.
           <span className="mt-3 flex flex-wrap gap-3 font-mono text-xs">
-            <a href="https://flap.sh" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">flap.sh ↗</a>
+            <a href="http://pools.trade" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">pools.trade ↗</a>
           </span>
         </Callout>
       </Sec>
@@ -100,9 +100,9 @@ export default function WhitepaperPage() {
             ["Status", "Bonded · live"],
           ]}
         />
-        <p className="font-mono text-xs text-dim">Contract · new token published at the flap.sh relaunch</p>
+        <p className="font-mono text-xs text-dim">Contract · new token published at the pools.trade relaunch</p>
         <p className="mt-2 font-mono text-xs">
-          <a href="https://flap.sh" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Relaunching on flap.sh ↗</a>
+          <a href="http://pools.trade" target="_blank" rel="noopener noreferrer" className="text-accent-pale hover:text-ink">Relaunching on pools.trade ↗</a>
         </p>
         <p className="mt-4">
           <strong>Distribution:</strong> Node providers 38% · Public sale 22% · DAO treasury 18% ·
@@ -147,7 +147,7 @@ export default function WhitepaperPage() {
       <Sec n="10" title="Roadmap">
         <Bullets
           items={[
-            <><strong>Shipped</strong> — mainnet on {CHAIN.name}, GPU marketplace, Spearbit audit, $VRTN relaunching on flap.sh with a 1:1 holder airdrop.</>,
+            <><strong>Shipped</strong> — mainnet on {CHAIN.name}, GPU marketplace, Spearbit audit, $VRTN relaunching on pools.trade with a 1:1 holder airdrop.</>,
             <><strong>In progress</strong> — hybrid NPU + GPU router, AI model suite, Vortano AI Wallet.</>,
             <><strong>Planned</strong> — autonomous on-chain agents, AI-native OS, zk-fraud proofs, DAO governance v1.</>,
           ]}

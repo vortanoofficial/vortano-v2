@@ -58,7 +58,7 @@ export function PaperShell({
           <p className="mt-6 text-lg leading-relaxed text-muted">{lede}</p>
           <div className="mt-6 flex flex-wrap gap-2 font-mono text-[11px] text-dim">
             <span className="rounded-full border border-accent/15 px-2.5 py-1">{CHAIN.name}</span>
-            <span className="rounded-full border border-accent/15 px-2.5 py-1">$VRTN · {(CHAIN.contract as string).length > 0 ? `${(CHAIN.contract as string).slice(0, 10)}…` : "relaunching on flap.sh"}</span>
+            <span className="rounded-full border border-accent/15 px-2.5 py-1">$VRTN · {(CHAIN.contract as string).length > 0 ? `${(CHAIN.contract as string).slice(0, 10)}…` : "relaunching on pools.trade"}</span>
             <span className="rounded-full border border-accent/15 px-2.5 py-1">Audited · Spearbit &amp; Trail of Bits</span>
           </div>
         </div>

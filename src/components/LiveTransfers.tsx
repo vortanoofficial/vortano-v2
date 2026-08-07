@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchTransfers, RH_EXPLORER, fmtCompact, type Transfer } from "@/lib/chain";
-import { VRTN_CONTRACT, TOKEN_LIVE, FLAP_URL } from "@/lib/market";
+import { VRTN_CONTRACT, TOKEN_LIVE, LAUNCH_URL } from "@/lib/market";
 
 /**
  * Live feed of REAL $VRTN transfers on Robinhood Chain, straight from the
@@ -59,13 +59,13 @@ export function LiveTransfers() {
         <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/[0.06] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent-pale">
           <span className="h-1.5 w-1.5 rounded-full bg-positive animate-pulse-dot" /> Relaunch pending
         </div>
-        <div className="mt-4 text-lg font-semibold text-ink">Live transfers go live at the flap.sh relaunch</div>
+        <div className="mt-4 text-lg font-semibold text-ink">Live transfers go live at the pools.trade relaunch</div>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
           Real on-chain transfers of the new token will stream here — each verifiable on the
           explorer — the moment it launches.
         </p>
-        <a href={FLAP_URL} target="_blank" rel="noopener noreferrer" className="btn-gold mt-5 inline-block rounded-xl px-5 py-2.5 text-sm font-semibold">
-          Follow on flap.sh ↗
+        <a href={LAUNCH_URL} target="_blank" rel="noopener noreferrer" className="btn-gold mt-5 inline-block rounded-xl px-5 py-2.5 text-sm font-semibold">
+          Follow on pools.trade ↗
         </a>
       </div>
     );

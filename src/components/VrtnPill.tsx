@@ -40,14 +40,14 @@ export function VrtnPill() {
     }
   }, [v.price]);
 
-  // RELAUNCH pending: no old price/contract — point to flap.sh
+  // RELAUNCH pending: no old price/contract — point to pools.trade
   if (!TOKEN_LIVE) {
     return (
       <a
         href={VRTN_DEX_URL}
         target="_blank"
         rel="noopener noreferrer"
-        title="$VRTN relaunching on flap.sh"
+        title="$VRTN relaunching on pools.trade"
         className="hidden items-center gap-2 rounded-lg border border-accent/15 bg-accent/[0.05] px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent/40 hover:text-ink lg:flex"
       >
         <span className="inline-flex items-center gap-1.5 font-semibold text-accent-pale">
@@ -55,7 +55,7 @@ export function VrtnPill() {
           $VRTN
         </span>
         <span className="h-3 w-px bg-accent/25" />
-        <span className="text-ink">flap.sh soon</span>
+        <span className="text-ink">pools.trade soon</span>
       </a>
     );
   }
@@ -65,7 +65,7 @@ export function VrtnPill() {
       href={VRTN_DEX_URL}
       target="_blank"
       rel="noopener noreferrer"
-      title={`$VRTN · ${m.live ? "live" : "cached"} price — open flap.sh`}
+      title={`$VRTN · ${m.live ? "live" : "cached"} price — open pools.trade`}
       className="hidden items-center gap-2 rounded-lg border border-accent/15 bg-accent/[0.05] px-3 py-1.5 font-mono text-xs text-muted transition-colors hover:border-accent/40 hover:text-ink lg:flex"
     >
       <span className="inline-flex items-center gap-1.5 font-semibold text-accent-pale">

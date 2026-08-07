@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ShineImage } from "./ShineImage";
 import { Reveal } from "./Reveal";
 import { RelaunchBanner } from "./RelaunchBanner";
-import { TOKEN_LIVE, FLAP_URL } from "@/lib/market";
+import { TOKEN_LIVE, LAUNCH_URL } from "@/lib/market";
 import { HERO_STATS, PRICE_TICKER, CHAIN } from "@/lib/data";
 
 function HeroLogo() {
@@ -61,7 +61,7 @@ function CopyCA() {
     <div className="lux beam rounded-3xl px-5 py-4">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <span className="shine-gold text-[11px] font-bold uppercase tracking-[0.18em] sm:text-xs">
-          {TOKEN_LIVE ? "Official Contract Address" : "Relaunching on flap.sh"}
+          {TOKEN_LIVE ? "Official Contract Address" : "Relaunching on pools.trade"}
         </span>
         <span className="inline-flex items-center gap-2">
           <Image
@@ -92,12 +92,12 @@ function CopyCA() {
             New $VRTN contract published at launch. Holders airdropped 1:1 — you never send tokens.
           </span>
           <a
-            href={FLAP_URL}
+            href={LAUNCH_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider"
           >
-            flap.sh
+            pools.trade
           </a>
         </div>
       )}

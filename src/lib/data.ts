@@ -9,7 +9,7 @@ export const CHAIN = {
   explorer: "Robinscan",
   gas: "0.04 gwei",
   block: "18,492,113",
-  contract: "", // RELAUNCH: new flap.sh token address published at launch
+  contract: "", // RELAUNCH: new pools.trade token address published at launch
 } as const;
 
 export const HERO_STATS = [

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { VRTN_CONTRACT, TOKEN_LIVE, FLAP_URL } from "@/lib/market";
+import { VRTN_CONTRACT, TOKEN_LIVE, LAUNCH_URL } from "@/lib/market";
 
 /**
  * One-tap: add the real Robinhood Chain network and the $VRTN token to any
@@ -111,7 +111,7 @@ export function AddToWallet() {
             disabled={tokenStatus === "pending" || !TOKEN_LIVE}
             className="btn-gold rounded-xl px-4 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5 disabled:opacity-60"
           >
-            {TOKEN_LIVE ? label("Add $VRTN token", tokenStatus) : "Token at flap.sh launch"}
+            {TOKEN_LIVE ? label("Add $VRTN token", tokenStatus) : "Token at pools.trade launch"}
           </button>
         </div>
       ) : (
@@ -141,15 +141,15 @@ export function AddToWallet() {
         ) : (
           <>
             <span className="min-w-0 flex-1 truncate font-mono text-xs tracking-wide text-muted">
-              New $VRTN address published at the flap.sh relaunch
+              New $VRTN address published at the pools.trade relaunch
             </span>
             <a
-              href={FLAP_URL}
+              href={LAUNCH_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-dim transition-colors hover:text-accent-pale"
             >
-              flap.sh ↗
+              pools.trade ↗
             </a>
           </>
         )}

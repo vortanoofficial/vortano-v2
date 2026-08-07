@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FLAP_URL } from "@/lib/market";
+import { LAUNCH_URL } from "@/lib/market";
 
 /**
- * Site-wide relaunch notice: Vortano is relaunching on flap.sh with a 1:1 snapshot
+ * Site-wide relaunch notice: Vortano is relaunching on pools.trade with a 1:1 snapshot
  * airdrop. Doubles as scam protection — it tells holders they NEVER need to send
  * tokens to anyone. Dismissible (remembered in localStorage).
  */
@@ -38,7 +38,7 @@ export function RelaunchBanner() {
           <div className="min-w-0">
             <div className="text-sm font-semibold text-ink sm:text-base">
               Vortano is relaunching on{" "}
-              <span className="text-accent-pale">flap.sh</span> — every $VRTN holder gets the new
+              <span className="text-accent-pale">pools.trade</span> — every $VRTN holder gets the new
               token <span className="text-accent-pale">1:1, automatically</span>.
             </div>
             <div className="mt-1 text-[12px] leading-relaxed text-muted">
@@ -54,12 +54,12 @@ export function RelaunchBanner() {
 
         <div className="flex shrink-0 items-center gap-2">
           <a
-            href={FLAP_URL}
+            href={LAUNCH_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold rounded-xl px-4 py-2 text-sm font-semibold"
           >
-            Follow on flap.sh ↗
+            Follow on pools.trade ↗
           </a>
         </div>
       </div>

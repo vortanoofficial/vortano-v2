@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMarket } from "./MarketProvider";
-import { fmtPrice, fmtCompact, fmtPct, VRTN_PAIR, VRTN_CONTRACT, FLAP_URL, TOKEN_LIVE } from "@/lib/market";
+import { fmtPrice, fmtCompact, fmtPct, VRTN_PAIR, VRTN_CONTRACT, LAUNCH_URL, TOKEN_LIVE } from "@/lib/market";
 
 export function VrtnStats() {
   const m = useMarket();
@@ -17,25 +17,25 @@ export function VrtnStats() {
     ["Txns 24h", v.txns24h.toLocaleString("en-US")],
   ];
 
-  // RELAUNCH pending: hide old price/chart/contract until the new flap.sh token is set
+  // RELAUNCH pending: hide old price/chart/contract until the new pools.trade token is set
   if (!TOKEN_LIVE) {
     return (
       <div className="rounded-2xl border border-accent/20 bg-accent/[0.05] p-6 text-center">
         <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/[0.06] px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent-pale">
           <span className="h-1.5 w-1.5 rounded-full bg-positive animate-pulse-dot" /> Relaunch pending
         </div>
-        <div className="mt-4 text-lg font-semibold text-ink">$VRTN is relaunching on flap.sh</div>
+        <div className="mt-4 text-lg font-semibold text-ink">$VRTN is relaunching on pools.trade</div>
         <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted">
           Price, chart and the new contract go live at launch. Every holder is airdropped the new
           token 1:1 — no action needed. You never send tokens to claim.
         </p>
         <a
-          href={FLAP_URL}
+          href={LAUNCH_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-gold mt-5 inline-block rounded-xl px-5 py-2.5 text-sm font-semibold"
         >
-          Follow on flap.sh ↗
+          Follow on pools.trade ↗
         </a>
       </div>
     );
@@ -47,7 +47,7 @@ export function VrtnStats() {
       <div className="flex items-end justify-between gap-3">
         <div>
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest text-dim">
-            VRTN · flap.sh
+            VRTN · pools.trade
             <span className="inline-flex items-center gap-1 text-positive">
               <span className="h-1 w-1 rounded-full bg-positive animate-pulse-dot" />
               {m.live ? "live" : "cached"}
@@ -120,12 +120,12 @@ export function VrtnStats() {
       <div className="mt-4 flex items-center justify-between gap-3 rounded-xl border border-accent/15 bg-black/40 px-3.5 py-2.5">
         <span className="min-w-0 flex-1 truncate font-robo text-xs tracking-wide text-accent-pale">{VRTN_CONTRACT}</span>
         <a
-          href={FLAP_URL}
+          href={LAUNCH_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="shrink-0 font-mono text-[11px] uppercase tracking-wider text-dim transition-colors hover:text-accent-pale"
         >
-          flap.sh ↗
+          pools.trade ↗
         </a>
       </div>
     </div>
